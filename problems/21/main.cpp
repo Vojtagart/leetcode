@@ -24,28 +24,23 @@ struct ListNode {
 class Solution {
   public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-      ListNode * root = nullptr, * p1 = list1, * p2 = list2, * ptr;
+      ListNode * root = new ListNode();
+      ListNode * ptr = root;
 
-      while (p1 || p2) {
-        if ((p2 == nullptr) || (p1 != nullptr && p1->val <= p2->val)) {
-          if (root == nullptr) {
-            ptr = root = new ListNode(p1->val);
-          } else {
-            ptr->next = new ListNode(p1->val);
-            ptr = ptr->next;
-          }
-          p1 = p1->next;
+      while (list1 != nullptr && list2 != nullptr) {
+        if (list1->val <= list2->val) {
+          ptr = ptr->next = list1;
+          list1 = list1->next;
         } else {
-          if (root == nullptr) {
-            ptr = root = new ListNode(p2->val);
-          } else {
-            ptr->next = new ListNode(p2->val);
-            ptr = ptr->next;
-          }
-          p2 = p2->next;
+          ptr = ptr->next = list2;
+          list2 = list2->next;
         }
       }
-      return root;
+      ptr->next = list1 == nullptr ? list2 : list1;
+
+      ListNode * ret = root->next;
+      delete root;
+      return ret;
     }
 };
 
