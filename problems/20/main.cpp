@@ -14,7 +14,35 @@ void printContainer(const _C & container) {
 
 class Solution {
   public:
-    
+    bool isValid(string s) {
+      vector<char> brack;
+
+      for (char c : s) {
+        switch (c) {
+          case '(' : brack.push_back('('); break;
+          case '[' : brack.push_back('['); break;
+          case '{' : brack.push_back('{'); break;
+
+          case ')' :
+            if (brack.size() == 0 || brack.back() != '(') {
+              return false;
+            }
+            brack.pop_back();
+            break;
+          case ']' :
+            if (brack.size() == 0 || brack.back() != '[')
+              return false;
+            brack.pop_back();
+            break;
+          case '}' :
+            if (brack.size() == 0 || brack.back() != '{')
+              return false;
+            brack.pop_back();
+            break;
+        }
+      }
+      return brack.size() == 0;
+    }
 };
 
 
@@ -23,5 +51,6 @@ class Solution {
 int main() {
 
   Solution s;
+  cout << s.isValid("()") << endl;
     
 }
