@@ -14,7 +14,18 @@ void printContainer(const _C & container) {
 
 class Solution {
   public:
-    
+    int removeElement(vector<int>& nums, int val) {
+      int idx = 0;
+
+      for (int i = 0; i < nums.size(); i++) {
+        int cur = nums[i];
+        nums[idx] = nums[i];
+
+        if (cur != val)
+          idx++;
+      }
+      return idx;
+    }
 };
 
 
