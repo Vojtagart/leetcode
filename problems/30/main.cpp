@@ -30,7 +30,7 @@ class Solution {
     void solveFrom(int l, const string & s, vector<int> & ret) {
 
       int r = l;
-      unordered_map<string, queue<int>> seen;
+      unordered_map<string, int> seen;
 
       while (l <= static_cast<int>(s.size()) - clen) {
 
@@ -39,20 +39,21 @@ class Solution {
 
         if (p == freq.end()) {
           l = r + wlen; r = l;
+          seen.clear();
           continue;
         }
-        auto it = seen.insert({str, queue<int>()}).first;
-        it->second.push(r);
+        auto it = seen.insert({str, 0}).first;
+        it->second++;
 
-        if (it->second.size() > p->second) {
-          l = max(l, it->second.front() + wlen);
-          it->second.pop();
+        while (it->second > p->second) {
+          string leftW = s.substr(l, wlen);
+          seen[leftW]--;
+          l += wlen;
         }
         r += wlen;
 
         if (r - l == clen) {
           ret.push_back(l);
-          l += wlen;
         }
       }
     }
